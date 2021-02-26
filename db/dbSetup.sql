@@ -1,9 +1,9 @@
 
-/*
-DROP DATABASE IF EXISTS databse_name;
-CREATE DATABASE databse_name;
 
-DROP DATABASE IF EXISTS databse_test_name;
-CREATE DATABASE databse_test_name;
-*/
+DROP DATABASE IF EXISTS pitch_perfect_test;
+CREATE DATABASE pitch_perfect_test;
+
+DROP DATABASE IF EXISTS pitch_perfect_dev;
+CREATE DATABASE pitch_perfect_dev;
+
         

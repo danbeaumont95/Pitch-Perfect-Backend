@@ -1,6 +1,4 @@
-
 const ENV = process.env.NODE_ENV || "development";
-// please make sure the following info is correct
 
 const baseConfig = {
   client: "pg",
@@ -13,21 +11,20 @@ const baseConfig = {
 };
 
 const customConfig = {
-      development: {
-        connection: {
-          database: "",
-          // user,
-          // password
-        },
-      },
-      test: {
-        connection: {
-          database: "",
-          // user,
-          // password
-        },
-      },
-}
+  development: {
+    connection: {
+      database: "pitch_perfect_dev",
+      // user,
+      // password
+    },
+  },
+  test: {
+    connection: {
+      database: "pitch_perfect_test",
+      // user,
+      // password
+    },
+  },
+};
 
-module.exports = {...baseConfig, ...customConfig[ENV]};
-    
+module.exports = { ...baseConfig, ...customConfig[ENV] };
