@@ -1,0 +1,1 @@
+exports.dev_data = require("./example_dev")
