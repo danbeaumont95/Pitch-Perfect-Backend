@@ -11,12 +11,16 @@
     "migrate-rollback": "knex migrate:rollback",
     "seed-dev": "knex seed:run",
     "start": "node listen.js",
-    "test": "jest"
+    "test": "jest",
+    "seed:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex seed:run",
+    "migrate-latest:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:latest",
+    "migrate-rollback:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:rollback"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.21.18",
     "pg": "^8.5.1"
