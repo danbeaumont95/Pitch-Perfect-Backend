@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup-dbs": "psql -f ./db/setup.sql",
+    "setup-dbs": "psql -f ./db/dbSetup.sql",
     "seed-test": "NODE_ENV=test knex seed:run",
     "migrate-make": "knex migrate:make",
     "migrate-latest": "knex migrate:latest",
@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "knex": "^0.21.18",
     "pg": "^8.5.1"
   },

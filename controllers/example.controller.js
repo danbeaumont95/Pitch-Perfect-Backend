@@ -3,5 +3,5 @@
 const { exampleModelFunc } = require("../models/example.model.js")
 
 exports.exampleControllerFunc = (req, res, next) => {
-    exampleModelFunc();
+    res.sendStatus(200)
 }
