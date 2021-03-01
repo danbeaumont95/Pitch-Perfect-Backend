@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const connection = require("../db/connection");
-process.env.NDDE_ENV = "test";
+process.env.NODE_ENV = "test";
 
 afterAll(() => {
   return connection.destroy();
