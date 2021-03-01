@@ -21,7 +21,7 @@ exports.seed = (knex) => {
     .then(() => {
       const reviews = [...dbData["reviewsData"]].map((review) => ({
         ...review,
-        date: new Date(review.created_at),
+        created_at: new Date(review.created_at),
       }));
       return knex("reviews").insert(reviews);
     });

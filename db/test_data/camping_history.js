@@ -29,4 +29,10 @@ module.exports = [
         place_id: 5,
         votes: 5
     },
+    {
+        username: 'user1',
+        date: 1511354163387,
+        place_id: 1,
+        votes: 3
+    }
 ]
