@@ -169,9 +169,6 @@ describe("/api/camping_history", () => {
 });
 
 describe.only("/api/campsites/:place_id", () => {
-  test("GET:200 responds with correct status code", () => {
-    return request(app).get("/api/campsites/1").expect(200);
-  });
   test("GET:200 responds with campsite object wiith properties campsite_name, owner_name, campsite_address, booked_dates, votes", () => {
     return request(app)
       .get("/api/campsites/1")
@@ -179,8 +176,8 @@ describe.only("/api/campsites/:place_id", () => {
       .then(({ body: { campsite } }) => {
         expect(campsite).toEqual(
           expect.objectContaining({
-            campsite_name: expect.any(String),
-            owner_name: expect.any(String),
+            place_id: expect.any(Number),
+            owner_username: expect.any(String),
             campsite_address: expect.any(String),
             booked_dates: expect.any(String),
             votes: expect.any(Number),
