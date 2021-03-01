@@ -2,7 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable("campsites", (campsitesTable) => {
     campsitesTable.increments("place_id").primary();
     campsitesTable
-      .string("ownername")
+      .string("owner_username")
       .references("owners.owner_username")
       .notNullable();
     campsitesTable.string("campsite_name").notNullable();
