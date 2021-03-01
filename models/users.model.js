@@ -9,8 +9,8 @@ const selectAllUsers = () => {
     .leftJoin("campsites", "campsites.place_id", "camping_history.place_id")
     .then((data) => {
       const campingHistory = [];
-      let ifExists = 0;
       for (let i = 0; i < data.length; i++) {
+        let ifExists = 0;
         campingHistory.forEach((camping) => {
           if (camping.username === data[i].username) {
             ifExists++;
@@ -31,6 +31,7 @@ const selectAllUsers = () => {
           const index = campingHistory.findIndex((camping) => {
             return camping.username === data[i].username;
           });
+          console.log(index);
           campingHistory[index].camping_history.push({
             date: data[i].date,
             campsite_name: data[i].campsite_name,
