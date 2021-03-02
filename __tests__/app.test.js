@@ -17,7 +17,7 @@ xdescribe("/api", () => {
   });
 });
 
-xdescribe("/api/users", () => {
+describe("/api/users", () => {
   test("GET:200 responds with correct status code", () => {
     return request(app).get("/api/users").expect(200);
   });
@@ -93,27 +93,6 @@ describe("/api/users/:user_id", () => {
   });
 });
 
-// describe.only("/api/reviews", () => {
-//   test("GET:200 responds with correct status code", () => {
-//     return request(app).get("/api/reviews").expect(200);
-//   });
-//   // test("GET:200 responds with array of all reviews", () => {
-//   //   return request(app)
-//   //     .get("/api/reviews")
-//   //     .expect(200)
-//   //     .then(({ body }) => {
-//   //       expect(body.reviews[0]).toEqual(
-//   //         expect.objectContaining({
-//   //           review_id: expect.any(Number),
-//   //           username: expect.any(String),
-//   //           campsite_name: expect.any(String),
-//   //           review: expect.any(String),
-//   //           created_at: expect.any(Number),
-//   //         })
-//   //       );
-//   //     });
-//   // });
-// });
 
 describe("/api/reviews:place_id", () => {
   test("GET:200 responds with correct status code", () => {
@@ -168,7 +147,9 @@ describe("/api/camping_history", () => {
   });
 });
 
-describe.only("/api/campsites/:place_id", () => {
+
+describe("/api/campsites/:place_id", () => {
+
   test("GET:200 responds with campsite object wiith properties campsite_name, owner_name, campsite_address, booked_dates, votes", () => {
     return request(app)
       .get("/api/campsites/1")
@@ -185,37 +166,63 @@ describe.only("/api/campsites/:place_id", () => {
         );
       });
   });
-  test("PATCH:200 responds with correct status code", () => {
-    return request(app).patch("/api/campsites/1").expect(200);
-  });
-  test("PATCH:200 increases votes on passed place_id", () => {
+
+  test("PATCH:201 increases votes on passed place_id", () => {
     const input = { votes: 1 };
     return request(app)
       .patch("/api/campsites/1")
-      .expect(200)
-      .then((res) => {
-        expect(res.body).toEqual({
-          votes: {
-            votes: 1,
-          },
-        });
-      });
+      .send(input)
+      .expect(201)
+      .then(({ body: { votes } }) => expect(votes).toEqual({ votes: 2 }));
+  });
+
+  test("PATCH:400 increases votes on passed place_id", () => {
+    const input = { votes: "NOTANUMBER" };
+    return request(app)
+      .patch("/api/campsites/1")
+      .send(input)
+      .expect(400)
+      .then(({ body: { msg } }) => expect(msg).toBe("votes is not a number"));
   });
 });
 
 describe("/api/:owner_username/campsites", () => {
-  test("GET:200 responds with correct status code", () => {
-    return request(app).get("/api/owner_username/campsites").expect(200);
-  });
   test("GET:200 responds with owners campsites array of objects", () => {
-    const arr = [
-      { campsite_name, owner_name, campsite_address, booked_dates, votes },
-    ];
     return request(app)
-      .get("/api/owner_username/campsites")
+      .get("/api/owners/owner1/campsites")
       .expect(200)
       .then(({ body: { campsites } }) => {
-        expect(campsites).toEqual(Array);
+        expect(campsites).toEqual([
+          {
+            owner_username: "owner1",
+            campsite_name: "campsite1",
+            campsite_address: "1 nc street, manchester",
+            booked_dates: "1st-Jan-2002",
+            place_id: 1,
+            votes: 1,
+          },
+        ]);
       });
+  });
+});
+
+describe("/api/login", () => {
+  test("POST:200 responds with user details", () => {
+    return request(app)
+      .post("/api/login")
+      .send({ username: "user1", password: "password1", isUser: true })
+      .expect(200);
+  });
+  test("POST:200 responds with owner user details", () => {
+    return request(app)
+      .post("/api/login")
+      .send({ username: "owner1", password: "ownerpassword1", isUser: false })
+      .expect(200);
+  });
+  test("POST:400 responds with error", () => {
+    return request(app)
+      .post("/api/login")
+      .send({ username: "NOTAUSER", password: "NOTAPASSWORD", isUser: true })
+      .expect(400);
   });
 });

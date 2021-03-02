@@ -12,4 +12,15 @@ exports.getCampsitesByPlaceId = (req, res, next) => {
     .catch(next);
 };
 
-exports.updateCampsitesByPlaceId = (req, res, next) => {};
+
+exports.patchCampsitesByPlaceId = (req, res, next) => {
+  const { place_id } = req.params;
+  const { votes } = req.body;
+
+  updateCampsitesByPlaceId(place_id, votes)
+    .then((votes) => res.status(201).send({ votes }))
+    .catch((err) => {
+      next(err);
+    });
+};
+

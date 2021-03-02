@@ -10,6 +10,21 @@ const selectCampsitesByPlaceId = (place_id) => {
     });
 };
 
-const updateCampsitesByPlaceId = () => {};
 
-module.exports = { selectCampsitesByPlaceId, updateCampsitesByPlaceId };
+const updateCampsitesByPlaceId = (place_id, votes) => {
+  if (isNaN(votes))
+    return Promise.reject({ msg: "votes is not a number", status: 400 });
+  return connection("campsites")
+    .where({ place_id })
+    .increment("votes", votes)
+    .returning("*")
+    .then((campsite) => {
+      return { votes: campsite[0].votes };
+    });
+};
+
+module.exports = {
+  selectCampsitesByPlaceId,
+  updateCampsitesByPlaceId,
+};
+

@@ -6,7 +6,7 @@ exports.seed = (knex) => {
     .then(() => knex.migrate.latest())
     .then(() => knex("users").insert(dbData["usersData"]))
     .then(() => {
-     return knex("owners").insert(dbData["ownersData"]);
+      return knex("owners").insert(dbData["ownersData"]);
     })
     .then(() => {
       return knex("campsites").insert(dbData["campsitesData"]);
@@ -16,7 +16,7 @@ exports.seed = (knex) => {
         ...dbData["camping_historyData"],
       ].map((camping) => ({ ...camping, date: new Date(camping.date) }));
 
-     return knex("camping_history").insert(camping_history);
+      return knex("camping_history").insert(camping_history);
     })
     .then(() => {
       const reviews = [...dbData["reviewsData"]].map((review) => ({
