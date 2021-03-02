@@ -93,6 +93,7 @@ describe("/api/users/:user_id", () => {
   });
 });
 
+
 describe("/api/reviews:place_id", () => {
   test("GET:200 responds with correct status code", () => {
     return request(app).get("/api/reviews/1").expect(200);
@@ -146,7 +147,9 @@ describe("/api/camping_history", () => {
   });
 });
 
+
 describe("/api/campsites/:place_id", () => {
+
   test("GET:200 responds with campsite object wiith properties campsite_name, owner_name, campsite_address, booked_dates, votes", () => {
     return request(app)
       .get("/api/campsites/1")

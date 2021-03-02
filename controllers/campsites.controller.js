@@ -12,6 +12,7 @@ exports.getCampsitesByPlaceId = (req, res, next) => {
     .catch(next);
 };
 
+
 exports.patchCampsitesByPlaceId = (req, res, next) => {
   const { place_id } = req.params;
   const { votes } = req.body;
@@ -22,3 +23,4 @@ exports.patchCampsitesByPlaceId = (req, res, next) => {
       next(err);
     });
 };
+

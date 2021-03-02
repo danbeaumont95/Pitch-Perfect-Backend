@@ -2,6 +2,7 @@ const express = require("express");
 const campsitesRouter = express.Router();
 const {
   getCampsitesByPlaceId,
+
   patchCampsitesByPlaceId,
 } = require("../controllers/campsites.controller");
 

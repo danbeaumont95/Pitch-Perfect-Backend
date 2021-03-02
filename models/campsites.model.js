@@ -10,6 +10,7 @@ const selectCampsitesByPlaceId = (place_id) => {
     });
 };
 
+
 const updateCampsitesByPlaceId = (place_id, votes) => {
   if (isNaN(votes))
     return Promise.reject({ msg: "votes is not a number", status: 400 });
@@ -26,3 +27,4 @@ module.exports = {
   selectCampsitesByPlaceId,
   updateCampsitesByPlaceId,
 };
+
