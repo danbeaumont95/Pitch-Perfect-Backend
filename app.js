@@ -15,14 +15,16 @@ app.all("/*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   // handle custom error
+
   if (err.status) {
-    res.status(err.status).send(err.msg);
+    res.status(err.status).send({ msg: err.msg });
   } else {
     next(err);
   }
 });
 app.use((err, req, res, next) => {
   // handle sql/database error
+  console.log(err);
   if (err.code) {
     res.status(400).send({ msg: err.detail });
   }

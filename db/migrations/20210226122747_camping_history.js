@@ -5,7 +5,7 @@ exports.up = function (knex) {
       .string("username")
       .references("users.username")
       .notNullable();
-    camping_historyTable.timestamp("date").notNullable();
+    camping_historyTable.timestamp("date").defaultTo(knex.fn.now());
     camping_historyTable
       .integer("place_id")
       .references("campsites.place_id")
