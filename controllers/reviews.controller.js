@@ -15,7 +15,6 @@ exports.getReviewsByPlaceId = (req, res, next) => {
 exports.postReviewsByPlaceId = (req, res, next) => {
   const { place_id } = req.params;
   const { username, review } = req.body;
-  console.log(place_id, username, review);
   addReviewByPlaceId(place_id, username, review)
     .then((review) => {
       res.status(201).send({ review });

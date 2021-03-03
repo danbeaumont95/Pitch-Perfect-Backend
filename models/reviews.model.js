@@ -8,7 +8,11 @@ const selectReviewsByPlaceId = (place_id) => {
     .where({ place_id })
     .then((reviews) => {
       const formattedReviews = reviews.map((review) => {
-        return { username: review.username, review: review.username };
+        return {
+          username: review.username,
+          review: review.review,
+          created_at: review.created_at,
+        };
       });
       return formattedReviews;
     });
