@@ -113,7 +113,7 @@ describe("/api/users/:user_id", () => {
   });
 });
 
-describe("/api/reviews:place_id", () => {
+describe("/api/reviews/:place_id", () => {
   test("GET:200 responds with correct status code", () => {
     return request(app).get("/api/reviews/1").expect(200);
   });
@@ -122,6 +122,7 @@ describe("/api/reviews:place_id", () => {
       .get("/api/reviews/1")
       .expect(200)
       .then(({ body: { reviews } }) => {
+        console.log(reviews);
         expect(reviews[0]).toEqual({
           review: expect.any(String),
           username: expect.any(String),
