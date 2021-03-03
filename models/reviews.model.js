@@ -34,7 +34,6 @@ const removeReviewByPlaceId = (place_id, username, review_id) => {
     .delete()
     .where({ place_id, username, review_id })
     .then((count) => {
-      console.log(count);
       if (count === 0) throw { status: 404, msg: "No review found" };
     });
 };
