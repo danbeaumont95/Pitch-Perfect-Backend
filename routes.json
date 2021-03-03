@@ -1,0 +1,81 @@
+{
+    "GET /api": {
+        "description": "Get all api routes"
+    },
+    "GET /api/users" : {
+        "description": "Get all users with username, camping_history",
+        "example response": {"users": [{"username": "user1", "camping_history": [{"date": "01/01/2001", "campsite_name": "Park Farm Caravan and Camping", "votes": 49}]}]}
+    },
+    "GET /api/users/:user_id": {
+        "description": "Get single user by ID",
+        "example response": {"user": {"username": "user1", "camping_history": [{"date": "01/01/2001", "campsite_name": "Park Farm Caravan and Camping", "votes": 49}]}}
+    },
+    "POST /api/users": {
+        "description": "Add new user",
+        "example post body": {
+            "username": "dan",
+            "password": "password",
+            "firstname": "firstname",
+            "lastname": "lastname"
+          },
+          "example response": {
+              "user": {"username": "dan"}
+          }
+    },
+    "GET /api/reviews/:place_id": {
+        "description": "Get reviews by place ID",
+        "example response": {"reviews": [{"username": "user1", "review": "Brilliant place"}]}
+    },
+    "POST /api/reviews/:place_id": {
+      "description": "add a new review by place ID",
+      "example post body": {
+            "username": "user1",
+            "review": "test review 1"
+      },
+      "example response": {
+          "review": {"username": "user1", "review": "test review 1", "created_at": "2017-11-22T12:36:03.389Z"}
+      }
+    },
+    "POST /api/camping_history": {
+        "description": "add a new camping history",
+        "example post body": {
+             "username": "user1", "place_id": 1, "votes": 1 
+        },
+        "example response": {
+            "camping_history": {"username": "user1", "date": "01/01/2001", "campsite_name": "campsite1", "votes": 1}
+        }
+    },
+    "GET /api/campsites/:place_id": {
+        "description": "gets campsites by place ID",
+        "example response": {
+            "campsite": {
+                "campsite_name": "Park Farm Caravan and Camping",
+                "owner_name": "coder411",
+                "campsite_address": "Junction Road, Bodiam, Robertsbridge, East Sussex TN32 5XA",
+                "booked_dates": "1st-Jan-2002, 23rd-June-2003",
+                "votes": 49
+            }
+        }
+    },
+    "PATCH /api/campsites/:place_id": {
+        "description": "updates votes on campsite by place ID",
+        "example patch body": {
+            "votes": 1
+        },
+        "example response": {
+            "votes": {"votes": 1}
+        }
+    },
+    "GET /api/owner_username/campsites": {
+        "description": "gets campsites by owners username",
+        "example response": {
+            "campsites": [{
+                "campsite_name": "Park Farm Caravan and Camping",
+                "owner_name": "coder411",
+                "campsite_address": "Junction Road, Bodiam, Robertsbridge, East Sussex TN32 5XA",
+                "booked_dates": "1st-Jan-2002, 23rd-June-2003",
+                "votes": 49
+            }]
+        }
+    }
+}

@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const connection = require("../db/connection");
+const apis = require("../routes.json");
 process.env.NODE_ENV = "test";
 
 afterAll(() => {
@@ -11,9 +12,28 @@ beforeEach(() => {
   return connection.seed.run();
 });
 
-xdescribe("/api", () => {
+describe("/", () => {
+  test("GET:200 responds with correct status code", () => {
+    return request(app)
+      .get("/")
+      .expect(404)
+      .then((body) => {
+        expect(body.body.msg).toEqual("please go to /api");
+      });
+  });
+});
+
+describe("/api", () => {
   test("GET:200 responds with correct status code", () => {
     return request(app).get("/api").expect(200);
+  });
+  test("GET:200 responds with all routes", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.apis).toEqual(apis);
+      });
   });
 });
 
@@ -25,7 +45,7 @@ describe("/api/users", () => {
     return request(app)
       .get("/api/users")
       .then(({ body }) => {
-        expect(body.campingHistory[0].camping_history[0]).toEqual(
+        expect(body.users[0].camping_history[0]).toEqual(
           expect.objectContaining({
             campsite_name: expect.any(String),
             date: expect.any(String),
@@ -93,8 +113,7 @@ describe("/api/users/:user_id", () => {
   });
 });
 
-
-describe("/api/reviews:place_id", () => {
+describe("/api/reviews/:place_id", () => {
   test("GET:200 responds with correct status code", () => {
     return request(app).get("/api/reviews/1").expect(200);
   });
@@ -103,9 +122,11 @@ describe("/api/reviews:place_id", () => {
       .get("/api/reviews/1")
       .expect(200)
       .then(({ body: { reviews } }) => {
+        console.log(reviews);
         expect(reviews[0]).toEqual({
           review: expect.any(String),
           username: expect.any(String),
+          created_at: expect.any(String),
         });
       });
   });
@@ -147,9 +168,7 @@ describe("/api/camping_history", () => {
   });
 });
 
-
 describe("/api/campsites/:place_id", () => {
-
   test("GET:200 responds with campsite object wiith properties campsite_name, owner_name, campsite_address, booked_dates, votes", () => {
     return request(app)
       .get("/api/campsites/1")

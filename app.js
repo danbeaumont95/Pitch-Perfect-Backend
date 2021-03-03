@@ -10,7 +10,7 @@ app.use(express.json());
 app.use("/api", apiRouter);
 
 app.all("/*", (req, res, next) => {
-  next({ status: 404, msg: "route not found" });
+  next({ status: 404, msg: "please go to /api" });
 });
 
 app.use((err, req, res, next) => {
@@ -24,13 +24,13 @@ app.use((err, req, res, next) => {
 });
 app.use((err, req, res, next) => {
   // handle sql/database error
-  console.log(err);
   if (err.code) {
     res.status(400).send({ msg: err.detail });
   }
 });
 app.use((err, req, res, next) => {
   // handle server error
+  res.sendStatus(500);
 });
 
 module.exports = app;
