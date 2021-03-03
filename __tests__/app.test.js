@@ -119,13 +119,14 @@ describe("/api/reviews/:place_id", () => {
   });
   test("GET:200 responds with object with key of reviews with array of object as property", () => {
     return request(app)
-      .get("/api/reviews/1")
+      .get("/api/reviews/ChIJr5GU_haje0gROgaokPtEXnk")
       .expect(200)
       .then(({ body: { reviews } }) => {
         expect(reviews[0]).toEqual({
           review: expect.any(String),
           username: expect.any(String),
           created_at: expect.any(String),
+          review_id: expect.any(Number)
         });
       });
   });
@@ -136,10 +137,10 @@ describe("/api/reviews/:place_id", () => {
       review: "test review 1",
     };
     const expected = {
-      review: { username: "user1", review: "test review 1", place_id: 1 },
+      review: { username: "user1", review: "test review 1", place_id: "ChIJr5GU_haje0gROgaokPtEXnk" },
     };
     return request(app)
-      .post("/api/reviews/1")
+      .post("/api/reviews/ChIJr5GU_haje0gROgaokPtEXnk")
       .send(input)
       .expect(201)
       .then(({ body: { review } }) => {
@@ -147,13 +148,62 @@ describe("/api/reviews/:place_id", () => {
         expect(review.place_id).toBe(expected.review.place_id);
       });
   });
+  test("DELETE:204 responds with 'no content' to a valid delete request", () => {
+    const input = {
+      username: "user1",
+      review_id: 1
+    };
+    return request(app)
+      .delete("/api/reviews/ChIJr5GU_haje0gROgaokPtEXnk")
+      .send(input)
+      .expect(204);
+  });
+  test("DELETE:404 responds with bad request when the place_id is invalid", () => {
+    const input = {
+      username: "user1",
+      review_id: 1
+    };
+    return request(app)
+      .delete("/api/reviews/1")
+      .send(input)
+      .expect(404)
+      .then(({body}) => {
+      expect(body.msg).toBe('review not found')
+    })
+  })
+  test("DELETE:404 responds with bad request when the username is invalid", () => {
+    const input = {
+      username: "invalidUser",
+      review_id: 1
+    }
+    return request(app)
+      .delete("/api/reviews/ChIJr5GU_haje0gROgaokPtEXnk")
+      .send(input)
+      .expect(404)
+      .then(({body}) => {
+      expect(body.msg).toBe('review not found')
+    })
+  })
+  test("DELETE:404 responds with bad request when the review_id is invalid", () => {
+    const input = {
+      username: "user1",
+      review_id: 1000000
+    }
+    return request(app)
+      .delete("/api/reviews/ChIJr5GU_haje0gROgaokPtEXnk")
+      .send(input)
+      .expect(404)
+      .then(({body}) => {
+      expect(body.msg).toBe('review not found')
+    })
+  })
 });
 
 describe("/api/camping_history", () => {
   test("POST:201 responds with campsite_history object with keys of username, date, campsite_name, votes", () => {
-    const input = { username: "user1", place_id: 1, votes: 1 };
+    const input = { username: "user1", place_id: "ChIJr5GU_haje0gROgaokPtEXnk", votes: 1 };
     const expected = {
-      camping_history: { username: "user1", place_id: 1, votes: 1 },
+      camping_history: { username: "user1", place_id: "ChIJr5GU_haje0gROgaokPtEXnk", votes: 1 },
     };
     return request(app)
       .post("/api/camping_history")
@@ -170,12 +220,12 @@ describe("/api/camping_history", () => {
 describe("/api/campsites/:place_id", () => {
   test("GET:200 responds with campsite object wiith properties campsite_name, owner_name, campsite_address, booked_dates, votes", () => {
     return request(app)
-      .get("/api/campsites/1")
+      .get("/api/campsites/ChIJr5GU_haje0gROgaokPtEXnk")
       .expect(200)
       .then(({ body: { campsite } }) => {
         expect(campsite).toEqual(
           expect.objectContaining({
-            place_id: expect.any(Number),
+            place_id: expect.any(String),
             owner_username: expect.any(String),
             campsite_address: expect.any(String),
             booked_dates: expect.any(String),
@@ -188,7 +238,7 @@ describe("/api/campsites/:place_id", () => {
   test("PATCH:201 increases votes on passed place_id", () => {
     const input = { votes: 1 };
     return request(app)
-      .patch("/api/campsites/1")
+      .patch("/api/campsites/ChIJr5GU_haje0gROgaokPtEXnk")
       .send(input)
       .expect(201)
       .then(({ body: { votes } }) => expect(votes).toEqual({ votes: 2 }));
@@ -216,7 +266,7 @@ describe("/api/:owner_username/campsites", () => {
             campsite_name: "campsite1",
             campsite_address: "1 nc street, manchester",
             booked_dates: "1st-Jan-2002",
-            place_id: 1,
+            place_id: "ChIJr5GU_haje0gROgaokPtEXnk",
             votes: 1,
           },
         ]);
