@@ -7,6 +7,7 @@ exports.getReviewsByPlaceId = (req, res, next) => {
   const { place_id } = req.params;
   selectReviewsByPlaceId(place_id)
     .then((reviews) => {
+      console.log(reviews, "in review controller");
       res.status(200).send({ reviews });
     })
     .catch(next);
