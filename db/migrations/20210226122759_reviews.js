@@ -3,7 +3,7 @@ exports.up = function (knex) {
     reviewsTable.increments("review_id").primary();
     reviewsTable.string("username").references("users.username").notNullable();
     reviewsTable
-      .integer("place_id")
+      .string("place_id")
       .references("campsites.place_id")
       .notNullable();
     reviewsTable.text("review").notNullable();

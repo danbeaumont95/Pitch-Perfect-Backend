@@ -1,6 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable("campsites", (campsitesTable) => {
-    campsitesTable.increments("place_id").primary();
+    campsitesTable.string("place_id").primary();
     campsitesTable
       .string("owner_username")
       .references("owners.owner_username")

@@ -7,7 +7,7 @@ exports.up = function (knex) {
       .notNullable();
     camping_historyTable.timestamp("date").defaultTo(knex.fn.now());
     camping_historyTable
-      .integer("place_id")
+      .string("place_id")
       .references("campsites.place_id")
       .notNullable();
     camping_historyTable.float("votes");
