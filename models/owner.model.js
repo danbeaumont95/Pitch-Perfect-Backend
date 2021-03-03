@@ -11,4 +11,22 @@ const selectCampsitesByOwnerUsername = (owner_username) => {
     });
 };
 
-module.exports = { selectCampsitesByOwnerUsername };
+const selectAllOwners = () => {
+  return connection("owners")
+    .select("*")
+    .then((owners) => {
+      if (!owners)
+        return Promise.reject({ status: 404, msg: "no owners found" });
+      const formattedOwners = owners.map((owner) => {
+        return {
+          owner_username: owner.owner_username,
+          firstname: owner.firstname,
+          lastname: owner.lastname,
+          avatar_url: owner.avatar_url,
+        };
+      });
+      return formattedOwners;
+    });
+};
+
+module.exports = { selectCampsitesByOwnerUsername, selectAllOwners };

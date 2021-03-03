@@ -12,6 +12,7 @@ const selectReviewsByPlaceId = (place_id) => {
           username: review.username,
           review: review.review,
           created_at: review.created_at,
+          review_id: review.review_id,
         };
       });
       return formattedReviews;
@@ -28,4 +29,18 @@ const addReviewByPlaceId = (place_id, username, review) => {
     });
 };
 
-module.exports = { selectReviewsByPlaceId, addReviewByPlaceId };
+const removeReviewByPlaceId = (place_id, username, review_id) => {
+  return connection("reviews")
+    .delete()
+    .where({ place_id, username, review_id })
+    .then((count) => {
+      console.log(count);
+      if (count === 0) throw { status: 404, msg: "No review found" };
+    });
+};
+
+module.exports = {
+  selectReviewsByPlaceId,
+  addReviewByPlaceId,
+  removeReviewByPlaceId,
+};
