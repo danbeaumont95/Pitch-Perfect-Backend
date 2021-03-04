@@ -15,7 +15,8 @@ app.use("/api", apiRouter);
 app.all("/*", (req, res, next) => {
   next({
     status: 404,
-    msg: "please go to https://pitch-perfect-api.herokuapp.com/api",
+    msg: "please go to the following path",
+    path: "https://pitch-perfect-api.herokuapp.com/api",
   });
 });
 
