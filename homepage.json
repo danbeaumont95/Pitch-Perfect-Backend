@@ -1,0 +1,4 @@
+{
+    "description": "Welcome to Pitch Perfect API, please follow the link below to access JSON object containing all of the available endpoints",
+    "apiPath": "https://pitch-perfect-api.herokuapp.com/api"
+}

@@ -16,9 +16,14 @@ describe("/", () => {
   test("GET:200 responds with correct status code", () => {
     return request(app)
       .get("/")
-      .expect(404)
-      .then((body) => {
-        expect(body.body.msg).toEqual("please go to /api");
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.welcome).toEqual(
+          expect.objectContaining({
+            description: expect.any(String),
+            apiPath: expect.any(String),
+          })
+        );
       });
   });
 });
@@ -113,7 +118,7 @@ describe("/api/users/:user_id", () => {
   });
 });
 
-describe.only("/api/reviews/:place_id", () => {
+describe("/api/reviews/:place_id", () => {
   test("GET:200 responds with correct status code", () => {
     return request(app)
       .get("/api/reviews/ChIJr5GU_haje0gROgaokPtEXnk")

@@ -7,8 +7,6 @@ const reviewsRouter = require("./reviews.router");
 const loginRouter = require("./login.router");
 const ownerRouter = require("./owner.router");
 
-//apiRouter.use('/endpoint', router_name);
-
 apiRouter.get("/", getAllAPIS);
 
 apiRouter.use("/login", loginRouter);
